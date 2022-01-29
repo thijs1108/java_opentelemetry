@@ -1,0 +1,12 @@
+version: "3.3"
+
+services:
+  postgres:
+    container_name: opentelemetry_postgres
+    build:
+      context: database
+      dockerfile: postgres.Dockerfile
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
