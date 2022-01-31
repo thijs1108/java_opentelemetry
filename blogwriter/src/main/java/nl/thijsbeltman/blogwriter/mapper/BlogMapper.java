@@ -10,8 +10,6 @@ public interface BlogMapper {
 
     BlogMapper INSTANCE = Mappers.getMapper(BlogMapper.class);
 
-    BlogDto blogToBlogDto(Blog blog);
-
     Blog blogDtoToBlog(BlogDto blogDto);
 
 }
