@@ -1,0 +1,24 @@
+label {
+  width: 100px;
+  display: inline-block;
+  margin: 10px 0px;
+}
+
+input {
+  width: 300px;
+  display: inline-block;
+  margin: 10px 0px;
+}
+
+textarea {
+  width: 1000px;
+  height: 200px;
+  margin-left: 100px;
+  display: inline-block;
+}
+
+button {
+  margin-left: 100px;
+  width: 150px;
+  height: 50px;
+}

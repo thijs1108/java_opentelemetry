@@ -1,0 +1,7 @@
+<h1>Schrijf je eigen blog!</h1>
+<form [formGroup]="blogForm" (ngSubmit)="onSubmit(blogForm.value)">
+  <label>Schrijver:</label><input type="text" formControlName="writer"><br>
+  <label>Titel:</label><input type="text" formControlName="title"><br>
+  <textarea formControlName="content"></textarea><br>
+  <button type="submit">Stuur je blog op</button>
+</form>

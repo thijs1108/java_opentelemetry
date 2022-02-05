@@ -1,0 +1,10 @@
+.blogs {
+  border: 1px black solid;
+  display: block;
+  margin: 10px;
+  padding: 10px;
+}
+
+.writtenby {
+  font-size: 14px;
+}
