@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   postgres:
-    container_name: opentelemetry_postgres
+    container_name: postgres
     build:
       context: database
       dockerfile: postgres.Dockerfile
@@ -14,7 +14,8 @@ services:
       - applications
 
   apm-server:
-    image: docker.elastic.co/apm/apm-server:7.15.2      
+    image: docker.elastic.co/apm/apm-server:7.15.2
+    container_name: apm
     cap_add: ["CHOWN", "DAC_OVERRIDE", "SETGID", "SETUID"]
     cap_drop: ["ALL"]
     ports:
