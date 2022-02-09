@@ -8,6 +8,8 @@ import nl.thijsbeltman.blogreader.rest.dto.BlogDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
+import java.util.random.RandomGenerator;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +19,10 @@ public class BlogService {
 
     public List<BlogDto> getAllBlogs() {
         List<Blog> all = blogRepository.findAll();
+        Random random = new Random();
+        if (random.nextFloat() > 0.75) {
+            throw new RuntimeException("failed");
+        }
         return BlogMapper.INSTANCE.blogListToBlogDtoList(all);
     }
 }

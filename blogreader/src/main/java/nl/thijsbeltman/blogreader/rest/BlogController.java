@@ -22,7 +22,9 @@ public class BlogController {
 
     @GetMapping
     public ResponseEntity<List<BlogDto>> retrieveBlogs() {
+        log.info("Recieved request for all blogs");
         List<BlogDto> allBlogs = blogService.getAllBlogs();
+        log.info("Found {} blogs", allBlogs.size());
         return ResponseEntity.ok().body(allBlogs);
     }
 

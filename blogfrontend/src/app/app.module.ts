@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BlogFormComponent } from './component/blog-form/blog-form.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CompositePropagatorModule, OpenTelemetryInterceptorModule, OtelColExporterModule } from '@jufab/opentelemetry-angular-interceptor';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OpenTelemetryInterceptorModule.forRoot(environment.opentelemetryConfig),
+    OtelColExporterModule,
+    CompositePropagatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
