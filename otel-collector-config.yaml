@@ -1,0 +1,42 @@
+#https://opentelemetry.io/docs/collector/configuration/#receivers
+receivers:
+  otlp:
+    protocols:
+      grpc:
+
+#https://opentelemetry.io/docs/collector/configuration/#exporters
+exporters:
+  logging:
+
+  zipkin:
+    endpoint: "http://zipkin:9411/api/v2/spans"
+    format: proto
+
+  jaeger:
+    endpoint: jaeger:14250
+    insecure: true
+
+  otlp:
+    endpoint: apm:8200
+    insecure: true
+
+
+#https://opentelemetry.io/docs/collector/configuration/#processors
+processors:
+  batch:
+#    send_batch_max_size: 0 #default
+#    send_batch_size: 8192 #default
+#    timeout: 200ms #default
+
+#https://opentelemetry.io/docs/collector/configuration/#extensions
+extensions:
+  health_check:
+
+#https://opentelemetry.io/docs/collector/configuration/#service
+service:
+  extensions: [health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging, zipkin, otlp, jaeger]

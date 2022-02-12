@@ -13,16 +13,59 @@ services:
     networks:
       - applications
 
+  blogreader:
+    container_name: blogreader
+    build:
+      context: ./blogreader
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+    networks:
+      - applications
+
+# observability services
+  otlp:
+    container_name: otlp
+    image: otel/opentelemetry-collector
+    command: [ "--config=/etc/otel-collector-config.yaml" ]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "13133:13133" # health_check extension
+      - "4317:4317"        # OTLP gRPC receiver
+    depends_on:
+      - zipkin
+    networks:
+      - applications
+      - observability
+
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - observability
+
+  jaeger:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+    networks:
+      - observability
+
   apm-server:
     image: docker.elastic.co/apm/apm-server:7.15.2
     container_name: apm
     cap_add: ["CHOWN", "DAC_OVERRIDE", "SETGID", "SETUID"]
     cap_drop: ["ALL"]
     ports:
-    - 8200:8200
+    - "8200:8200"
     networks:
-    - elastic
-    - applications
+    - observability
     command: >
        apm-server -e
          -E apm-server.rum.enabled=true
@@ -50,9 +93,9 @@ services:
     volumes:
     - esdata:/usr/share/elasticsearch/data
     ports:
-    - 9200:9200
+    - "9200:9200"
     networks:
-    - elastic
+    - observability
     healthcheck:
       interval: 20s
       retries: 10
@@ -63,25 +106,13 @@ services:
       ELASTICSEARCH_URL: http://elasticsearch:9200
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
     ports:
-    - 5601:5601
+    - "5601:5601"
     networks:
-    - elastic
+    - observability
     healthcheck:
       interval: 10s
       retries: 20
       test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:5601/api/status
-
-  blogreader:
-    container_name: blogreader
-    build:
-      context: ./blogreader
-      dockerfile: Dockerfile
-    ports:
-      - "8081:8081"
-    depends_on:
-      - postgres
-    networks:
-      - applications
 
 
 volumes:
@@ -89,7 +120,5 @@ volumes:
     driver: local
 
 networks:
-  elastic:
-    driver: bridge
+  observability:
   applications:
-  
