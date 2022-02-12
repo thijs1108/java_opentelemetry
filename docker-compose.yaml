@@ -13,6 +13,16 @@ services:
     networks:
       - applications
 
+  blogfrontend:
+    container_name: blogfrontend
+    build:
+      context: ./blogfrontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - applications
+
   blogreader:
     container_name: blogreader
     build:
@@ -35,8 +45,9 @@ services:
     ports:
       - "13133:13133" # health_check extension
       - "4317:4317"        # OTLP gRPC receiver
-    depends_on:
-      - zipkin
+      - "55681:55681" # OTLP http receiver
+#    depends_on:
+#      - zipkin
     networks:
       - applications
       - observability
