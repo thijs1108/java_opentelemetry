@@ -21,4 +21,9 @@ In onderstaande afbeelding hebben wij een voorbeeeld waarin APM erg helpvol zou 
 Gebruikers klagen bij het gebruik van deze applicatie. Hij is namelijk erg traag. Voor jou als ontwikkelaar is het nog niet gemakkelijk om er achter te komen waar het probleem zit. Het moment om APM toe te passen.
 
 ## 3. Hoe werkt APM
-Ieder event in de applicatie krijgt een uniek ID mee. De gehele tijd dat deze ID geldig is, wordt een trace genoemd. 
+application performance monitoring is een onderdeel van observability, net als logging en metrics.
+Ieder event in de applicatie krijgt een uniek ID mee. De gehele tijd dat dit ID geldig is, wordt een trace genoemd. Onder een trace vallen spans. Onder spans kunnen weer meerdere events vallen. Bij spans moet je denken aan onderdelen van een applicatie waar een trace allemaal doorheen gaat. Bijvoorbeeld een controller, een repository of een database query. Traces kunnen worden gevolgd over meerdere applicaties.
+![Traces](img/pres_traces_voorbeeld.png)
+
+## 6. Opdrachten
+De opdrachten voor deze sessie is om application performance monitoring toe te voegen aan een bestaande applicatie. Hiervoor hebben we een blogger applicatie opgezet. Deze blogger applicatie bestaat uit een frontend geschreven in Angular. Twee backend applicaties voor het schrijven en lezen van de blogs. En een Postgres database waar de blogs in staan. Deze blog applicatie heeft echter een probleem. Af en toe komen de blogs niet op de frontend terecht. Wie in de backend code kijkt zal vrij snel zien waardoor dit komt, maar we proberen hiermee een echt scenario na te bootsen die voor zou kunnen komen. Door het toevoegen van APM kun je zien hoe deze tools je er bij kunnen helpen in de toekomst gemakkelijk problemen in de applicatie te tackelen. 
